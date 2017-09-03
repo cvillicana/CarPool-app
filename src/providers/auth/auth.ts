@@ -1,13 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Storage } from '@ionic/storage';
+import { EnvVariables } from '../../app/environment-variables/environment-variables.token';
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class AuthProvider {
   public token:any;
 
-  constructor(public http: Http, public storage: Storage) {}
+  constructor(public http: Http, public storage: Storage,  @Inject(EnvVariables) public envVariables) {}
 
   checkAuthentication(){
     return new Promise((resolve,reject) =>{
@@ -16,7 +17,7 @@ export class AuthProvider {
         let headers = new Headers();
         headers.append('Authorization', this.token);
 
-        this.http.get('http://localhost:8080/api/auth/protected', {headers: headers})
+        this.http.get(this.envVariables.apiEndpoint + 'api/auth/protected', {headers: headers})
           .subscribe(res => {
             resolve(res);
           }, (err) => {
@@ -31,7 +32,7 @@ export class AuthProvider {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
 
-      this.http.post('http://localhost:8080/api/auth/register', JSON.stringify(details), {headers: headers})
+      this.http.post(this.envVariables.apiEndpoint + 'api/auth/register', JSON.stringify(details), {headers: headers})
         .subscribe(res => {
           let data = res.json();
           this.token = data.token;
@@ -48,7 +49,7 @@ export class AuthProvider {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
 
-      this.http.post('http://localhost:8080/api/auth/login', JSON.stringify(credentials), {headers: headers})
+      this.http.post(this.envVariables.apiEndpoint + 'api/auth/login', JSON.stringify(credentials), {headers: headers})
         .subscribe(res => {
           let data = res.json();
           this.token = data.token;

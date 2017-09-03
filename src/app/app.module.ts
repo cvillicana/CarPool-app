@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { HttpModule } from '@angular/http';
 import { IonicStorageModule } from '@ionic/storage';
+import { EnvironmentsModule } from './../app/environment-variables/environment-variables.module';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -24,6 +25,7 @@ import { TodosProvider } from '../providers/todos/todos';
   imports: [
     BrowserModule,
     HttpModule,
+    EnvironmentsModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
   ],
