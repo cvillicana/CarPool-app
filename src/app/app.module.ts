@@ -7,6 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { HttpModule } from '@angular/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { EnvironmentsModule } from './../app/environment-variables/environment-variables.module';
+import { Facebook } from '@ionic-native/facebook';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -42,7 +43,8 @@ import { TodosProvider } from '../providers/todos/todos';
     Storage,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
-    TodosProvider
+    TodosProvider,
+    Facebook
   ]
 })
 export class AppModule {}

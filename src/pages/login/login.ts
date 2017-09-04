@@ -43,6 +43,17 @@ export class LoginPage {
     });
   }
 
+  facebookLogin(){
+    this.showLoader();
+
+    this.authService.fbLogin().then((result) =>{
+      this.loading.dismiss();
+      this.navCtrl.setRoot(HomePage);
+    }, (err) => {
+      this.loading.dismiss();
+    });
+  }
+
   launchSignUp(){
     this.navCtrl.push(SignupPage);
   }

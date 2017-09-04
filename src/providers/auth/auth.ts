@@ -1,5 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { Http, Headers } from '@angular/http';
+import { Facebook } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { EnvVariables } from '../../app/environment-variables/environment-variables.token';
 import 'rxjs/add/operator/map';
@@ -7,8 +8,18 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class AuthProvider {
   public token:any;
+  public apiURL:any;
 
-  constructor(public http: Http, public storage: Storage,  @Inject(EnvVariables) public envVariables) {}
+  constructor(
+    public http: Http,
+    public storage: Storage,
+    @Inject(EnvVariables) public envVariables,
+    public fb: Facebook
+  ) {
+    this.apiURL = envVariables.apiEndpoint + "api/auth/";
+    this.fb.browserInit(envVariables.fbAppId, "v2.8");
+  }
+
 
   checkAuthentication(){
     return new Promise((resolve,reject) =>{
@@ -17,7 +28,7 @@ export class AuthProvider {
         let headers = new Headers();
         headers.append('Authorization', this.token);
 
-        this.http.get(this.envVariables.apiEndpoint + 'api/auth/protected', {headers: headers})
+        this.http.get(this.apiURL + 'protected', {headers: headers})
           .subscribe(res => {
             resolve(res);
           }, (err) => {
@@ -32,7 +43,7 @@ export class AuthProvider {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
 
-      this.http.post(this.envVariables.apiEndpoint + 'api/auth/register', JSON.stringify(details), {headers: headers})
+      this.http.post(this.apiURL + 'register', JSON.stringify(details), {headers: headers})
         .subscribe(res => {
           let data = res.json();
           this.token = data.token;
@@ -44,12 +55,36 @@ export class AuthProvider {
     });
   }
 
+  fbLogin(){
+    return new Promise((resolve,reject) => {
+      let permissions = new Array<string>();
+      let env = this;
+      permissions = ["public_profile"];
+
+      this.fb.login(permissions)
+        .then(function(response){
+          let userId = response.authResponse.userID;
+          let params = new Array<string>();
+
+          env.fb.api("/me?fields=name,gender", params)
+            .then(function(user){
+              user.picture = "https://graph.facebook.com/" + userId + "/picture?type=large";
+              resolve(user);
+            });
+        }, function(error){
+          reject(error);
+        })
+    })
+
+
+  }
+
   login(credentials){
     return new Promise((resolve,reject) => {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
 
-      this.http.post(this.envVariables.apiEndpoint + 'api/auth/login', JSON.stringify(credentials), {headers: headers})
+      this.http.post(this.apiURL + 'login', JSON.stringify(credentials), {headers: headers})
         .subscribe(res => {
           let data = res.json();
           this.token = data.token;
