@@ -59,17 +59,38 @@ export class AuthProvider {
     return new Promise((resolve,reject) => {
       let permissions = new Array<string>();
       let env = this;
-      permissions = ["public_profile"];
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      permissions = ["email"];
 
       this.fb.login(permissions)
         .then(function(response){
           let userId = response.authResponse.userID;
           let params = new Array<string>();
 
-          env.fb.api("/me?fields=name,gender", params)
+          env.fb.api("/me?fields=first_name,last_name,email", params)
             .then(function(user){
               user.picture = "https://graph.facebook.com/" + userId + "/picture?type=large";
-              resolve(user);
+              let credentials = {
+                email: user.email,
+                userId: userId,
+                picture: user.picture,
+                password: userId,
+                name: {
+                  firstName:user.first_name,
+                  lastName:user.last_name
+                }
+              };
+
+              env.http.post(env.apiURL + 'facebook', JSON.stringify(credentials), {headers: headers})
+                .subscribe(res => {
+                  let data = res.json();
+                  env.token = data.token;
+                  env.storage.set('token', data.token);
+                  resolve(data);
+                }, (err) =>{
+                  reject(err);
+                });
             });
         }, function(error){
           reject(error);

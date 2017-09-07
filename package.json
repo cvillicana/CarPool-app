@@ -56,8 +56,8 @@
             "cordova-plugin-whitelist": {},
             "ionic-plugin-keyboard": {},
             "cordova-plugin-facebook4": {
-                "APP_ID": "1924440867811012",
-                "APP_NAME": "CarPool"
+                "APP_ID": "1290362954408363",
+                "APP_NAME": "carpool"
             }
         },
         "platforms": [
