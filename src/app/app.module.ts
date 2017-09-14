@@ -13,6 +13,8 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
+import { TabsPage } from '../pages/tabs/tabs';
+
 import { AuthProvider } from '../providers/auth/auth';
 import { TodosProvider } from '../providers/todos/todos';
 
@@ -23,7 +25,8 @@ import { EmailValidator } from '../validators/email';
     MyApp,
     HomePage,
     LoginPage,
-    SignupPage
+    SignupPage,
+    TabsPage
   ],
   imports: [
     BrowserModule,
@@ -37,7 +40,8 @@ import { EmailValidator } from '../validators/email';
     MyApp,
     HomePage,
     LoginPage,
-    SignupPage
+    SignupPage,
+    TabsPage
   ],
   providers: [
     StatusBar,

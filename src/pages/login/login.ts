@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, LoadingController } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
-import { HomePage } from '../home/home';
+import { TabsPage } from '../tabs/tabs';
 import { SignupPage } from '../signup/signup';
 
 @Component({
@@ -21,7 +21,7 @@ export class LoginPage {
 
     this.authService.checkAuthentication().then((res) => {
       this.loading.dismiss();
-      this.navCtrl.setRoot(HomePage);
+      this.navCtrl.setRoot(TabsPage);
     }, (err) => {
       this.loading.dismiss();
     });
@@ -37,7 +37,7 @@ export class LoginPage {
 
     this.authService.login(credentials).then((result) => {
       this.loading.dismiss();
-      this.navCtrl.setRoot(HomePage);
+      this.navCtrl.setRoot(TabsPage);
     }, (err) => {
       this.loading.dismiss();
     });
@@ -48,7 +48,7 @@ export class LoginPage {
 
     this.authService.fbLogin().then((result) =>{
       this.loading.dismiss();
-      this.navCtrl.setRoot(HomePage);
+      this.navCtrl.setRoot(TabsPage);
     }, (err) => {
       this.loading.dismiss();
     });
