@@ -7,21 +7,56 @@
 <ion-content padding>
   <ion-row class="account-form">
     <ion-col>
-      <ion-list inset>
+      <form [formGroup]="signUpForm" (ngSubmit)="register(signUpForm)">
 
-        <ion-item>
-          <ion-label><ion-icon name="mail"></ion-icon></ion-label>
-            <ion-input [(ngModel)]="email" placeholder="Email" type="email"></ion-input>
+          <ion-item>
+              <ion-label floating>First Name</ion-label>
+              <ion-input formControlName="firstName" type="text"
+                [class.invalid]="!signUpForm.controls.firstName.valid && (signUpForm.controls.firstName.dirty || submitAttempt)"
+              ></ion-input>
+          </ion-item>
+
+          <ion-item *ngIf="!signUpForm.controls.firstName.valid  && (signUpForm.controls.firstName.dirty || submitAttempt)">
+               <p>Please enter a valid name.</p>
+           </ion-item>
+
+          <ion-item>
+              <ion-label floating>Last Name</ion-label>
+              <ion-input formControlName="lastName" type="text"
+                [class.invalid]="!signUpForm.controls.lastName.valid && (signUpForm.controls.lastName.dirty || submitAttempt)"
+              ></ion-input>
+          </ion-item>
+
+          <ion-item *ngIf="!signUpForm.controls.lastName.valid  && (signUpForm.controls.lastName.dirty || submitAttempt)">
+               <p>Please enter a valid name.</p>
+           </ion-item>
+
+          <ion-item>
+              <ion-label floating>Email</ion-label>
+              <ion-input formControlName="email" type="email"
+                [class.invalid]="!signUpForm.controls.email.valid && (signUpForm.controls.email.dirty || submitAttempt)"
+              ></ion-input>
+          </ion-item>
+
+          <ion-item *ngIf="signUpForm.controls.email.pending">
+              <p>Checking email...</p>
+          </ion-item>
+
+          <ion-item *ngIf="!signUpForm.controls.email.valid && !signUpForm.controls.email.pending && (signUpForm.controls.email.dirty || submitAttempt)">
+              <p>Sorry, that email can not be used!</p>
           </ion-item>
 
           <ion-item>
-            <ion-label><ion-icon name="lock"></ion-icon></ion-label>
-              <ion-input [(ngModel)]="password" placeholder="Password" type="password"></ion-input>
-            </ion-item>
+              <ion-label floating>Password</ion-label>
+              <ion-input formControlName="password" type="password"
+                [class.invalid]="!signUpForm.controls.password.valid && (signUpForm.controls.password.dirty || submitAttempt)"
+              ></ion-input>
+          </ion-item>
 
-        </ion-list>
+          <button full ion-button class="continue-button">Register</button>
 
-        <button full ion-button (click)="register()" class="continue-button">Register</button>
+      </form>
+
 
         </ion-col>
     </ion-row>

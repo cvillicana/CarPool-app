@@ -16,6 +16,8 @@ import { SignupPage } from '../pages/signup/signup';
 import { AuthProvider } from '../providers/auth/auth';
 import { TodosProvider } from '../providers/todos/todos';
 
+import { EmailValidator } from '../validators/email';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -44,7 +46,8 @@ import { TodosProvider } from '../providers/todos/todos';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
     TodosProvider,
-    Facebook
+    Facebook,
+    EmailValidator
   ]
 })
 export class AppModule {}

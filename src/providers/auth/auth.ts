@@ -117,6 +117,20 @@ export class AuthProvider {
     });
   }
 
+  valideEmail(email){
+    return new Promise((resolve,reject) =>  {
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      this.http.get(this.apiURL + 'exists/'+ email, {headers:headers})
+        .subscribe(res => {
+          let data = res.json();
+          resolve(data);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
   logout(){
     this.storage.set('token', '');
   }
