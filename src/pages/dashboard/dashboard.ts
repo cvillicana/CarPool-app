@@ -7,7 +7,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 @IonicPage()
 @Component({
   selector: 'page-dashboard',
-  templateUrl: 'dashboard.html',
+  templateUrl: 'dashboard.html'
 })
 export class DashboardPage {
 
@@ -18,6 +18,14 @@ export class DashboardPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DashboardPage');
+  }
+
+  goSearchTrip() {
+    this.navCtrl.push('SearchTripPage');
+  }
+
+  goStartTrip(){
+    this.navCtrl.push('StartTripPage');
   }
 
   logOut(){

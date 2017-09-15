@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, LoadingController } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
-import { TabsPage } from '../tabs/tabs';
-import { SignupPage } from '../signup/signup';
 
+@IonicPage()
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html'
@@ -13,15 +12,17 @@ export class LoginPage {
   password: string;
   loading: any;
 
-  constructor(public navCtrl: NavController,  public authService: AuthProvider, public loadingCtrl: LoadingController) {
-  }
+  constructor(
+    public navCtrl: NavController,
+    public authService: AuthProvider,
+    public loadingCtrl: LoadingController) {}
 
   ionViewDidLoad() {
     this.showLoader();
 
     this.authService.checkAuthentication().then((res) => {
       this.loading.dismiss();
-      this.navCtrl.setRoot(TabsPage);
+      this.navCtrl.setRoot('TabsPage');
     }, (err) => {
       this.loading.dismiss();
     });
@@ -37,7 +38,7 @@ export class LoginPage {
 
     this.authService.login(credentials).then((result) => {
       this.loading.dismiss();
-      this.navCtrl.setRoot(TabsPage);
+      this.navCtrl.setRoot('TabsPage');
     }, (err) => {
       this.loading.dismiss();
     });
@@ -48,14 +49,14 @@ export class LoginPage {
 
     this.authService.fbLogin().then((result) =>{
       this.loading.dismiss();
-      this.navCtrl.setRoot(TabsPage);
+      this.navCtrl.setRoot('TabsPage');
     }, (err) => {
       this.loading.dismiss();
     });
   }
 
   launchSignUp(){
-    this.navCtrl.push(SignupPage);
+    this.navCtrl.push('SignupPage');
   }
 
   showLoader(){

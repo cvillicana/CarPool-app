@@ -1,3 +1,15 @@
-page-dashboard {
+page-dashboard{
 
+  .buttons-dashboard {
+
+    button{
+      height: 150px;
+      width: 150px;
+      border-radius: 100px;
+    }
+
+    .margin-top-60{
+      margin-top: 60px;
+    }
+  }
 }

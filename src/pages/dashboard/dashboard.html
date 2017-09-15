@@ -18,15 +18,17 @@
 
 </ion-header>
 
-
-<ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+<ion-content padding class="buttons-dashboard">
+  <div text-center class="margin-top-60">
+    <button (click)="goSearchTrip()" ion-button outline icon-start>
+      <ion-icon name='car' is-active="false"></ion-icon>
+      Start a trip
+    </button>
+  </div>
+  <div text-center class="margin-top-60">
+    <button color="primary" ion-button outline icon-start>
+      <ion-icon name='contacts' is-active="false"></ion-icon>
+      Search a trip
+    </button>
+  </div>
 </ion-content>
