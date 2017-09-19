@@ -61,7 +61,7 @@ export class AuthProvider {
       let env = this;
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
-      permissions = ["email"];
+      permissions = ["public_profile","email"];
 
       this.fb.login(permissions)
         .then(function(response){

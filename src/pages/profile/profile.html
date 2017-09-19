@@ -8,10 +8,36 @@
 
 
 <ion-content padding>
-  <div>
-    <button (click)="logOut()" ion-button outline icon-start>
-      <ion-icon name='power' is-active="false"></ion-icon>
-      Logout
-    </button>
+
+  <div text-center>
+    <img [src]="backgroundImg"  class="profile-image"/>
   </div>
+
+  <ion-row class="account-form">
+    <ion-col>
+      <form [formGroup]="signUpForm">
+
+          <ion-item>
+              <ion-label floating>First Name</ion-label>
+              <ion-input formControlName="firstName" type="text"
+              ></ion-input>
+          </ion-item>
+
+          <ion-item>
+              <ion-label floating>Last Name</ion-label>
+              <ion-input formControlName="lastName" type="text"
+              ></ion-input>
+          </ion-item>
+
+      </form>
+
+
+    </ion-col>
+  </ion-row>
+
+  <button (click)="logOut()" ion-button outline icon-start>
+    <ion-icon name='power' is-active="false"></ion-icon>
+    Logout
+  </button>
+
 </ion-content>

@@ -4,6 +4,11 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
+import { Camera } from '@ionic-native/camera';
+import { File } from '@ionic-native/file';
+import { Transfer } from '@ionic-native/transfer';
+import { FilePath } from '@ionic-native/file-path';
+
 import { HttpModule } from '@angular/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { EnvironmentsModule } from './../app/environment-variables/environment-variables.module';
@@ -16,6 +21,8 @@ import { AuthProvider } from '../providers/auth/auth';
 import { TodosProvider } from '../providers/todos/todos';
 
 import { EmailValidator } from '../validators/email';
+import { ImageProvider } from '../providers/image/image';
+import { UserProvider } from '../providers/user/user';
 
 @NgModule({
   declarations: [
@@ -26,7 +33,9 @@ import { EmailValidator } from '../validators/email';
     BrowserModule,
     HttpModule,
     EnvironmentsModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {
+      tabsHideOnSubPages: true
+    }),
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
@@ -42,7 +51,13 @@ import { EmailValidator } from '../validators/email';
     AuthProvider,
     TodosProvider,
     Facebook,
-    EmailValidator
+    EmailValidator,
+    Camera,
+    File,
+    Transfer,
+    FilePath,
+    ImageProvider,
+    UserProvider
   ]
 })
 export class AppModule {}
