@@ -8,6 +8,8 @@ import { ImageProvider } from '../../providers/image/image';
 
 import { User } from '../../models/user';
 
+import 'rxjs/add/operator/debounceTime';
+
 @IonicPage()
 @Component({
   selector: 'page-profile',
@@ -36,6 +38,11 @@ export class ProfilePage {
             lastName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])]
           })
         });
+        this.profileForm.valueChanges
+          .debounceTime(1000)
+          .subscribe(form => {
+            this.save(form);
+          });
 
     }
 
@@ -58,8 +65,8 @@ export class ProfilePage {
     })
   }
 
-  save(model: User, isValid:boolean){
-    if(!isValid){
+  save(model: User){
+    if(!this.profileForm.valid){
       return;
     }
     this.submitAttempt = true;
