@@ -53,24 +53,26 @@ export class UserProvider {
   }
 
   uploadImage(pathImage){
-    let headers = new Headers();
-    headers.append('Authorization', this.authService.token);
+    return new Promise((resolve, reject) => {
+      let headers = new Headers();
+      headers.append('Authorization', this.authService.token);
 
-    var options = {
-      fileKey: "file",
-      fileName: "filename",
-      chunkedMode: false,
-      mimeType: "multipart/form-data",
-      params : {'fileName': "filename"},
-      headers: headers
-    };
+      var options = {
+        fileKey: "file",
+        fileName: "filename",
+        chunkedMode: false,
+        mimeType: "multipart/form-data",
+        params : {'fileName': "filename"},
+        headers: headers
+      };
 
-    const fileTransfer: TransferObject = this.transfer.create();
+      const fileTransfer: TransferObject = this.transfer.create();
 
-    fileTransfer.upload(pathImage, this.apiURL + "me/picture", options).then((data) => {
-      console.log(data);
-    },(err) => {
-      console.log(err);
+      fileTransfer.upload(pathImage, this.apiURL + "me/picture", options).then((data) => {
+        resolve(data);
+      },(err) => {
+        reject(err);
+      });
     });
 
   }
