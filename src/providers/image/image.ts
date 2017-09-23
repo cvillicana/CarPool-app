@@ -24,22 +24,6 @@ export class ImageProvider {
     public toastCtrl: ToastController,
     private camera: Camera) {}
 
-  // takePictureCamera(){
-  //
-  //   return new Promise((resolve,reject) => {
-  //     this.camera.getPicture({
-  //       destinationType: this.camera.DestinationType.DATA_URL,
-  //       targetWidth: 1000,
-  //       targetHeight: 1000
-  //     }).then((data) => {
-  //       let imageData =  "data:image/jpeg;base64," + data;
-  //       resolve(imageData)
-  //     }, (err) => {
-  //       reject(err);
-  //     });
-  //   });
-  // }
-
   private createFileName() {
     var d = new Date(),
     n = d.getTime(),
