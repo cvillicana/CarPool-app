@@ -3,6 +3,7 @@ import { Http } from '@angular/http';
 import { File } from '@ionic-native/file';
 import { FilePath } from '@ionic-native/file-path';
 import { Camera } from '@ionic-native/camera';
+import { Crop } from '@ionic-native/crop';
 import { ActionSheetController, Platform, ToastController } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 
@@ -20,6 +21,7 @@ export class ImageProvider {
     private filePath: FilePath,
     public platform: Platform,
     public toastCtrl: ToastController,
+    private crop: Crop,
     private camera: Camera) {}
 
   private createFileName() {
@@ -117,7 +119,11 @@ export class ImageProvider {
                 this.camera.PictureSourceType.PHOTOLIBRARY
               ).then((success) => {
                 var image = this.pathForImage(success);
-                resolve(image);
+                this.crop.crop(image, {quality: 50})
+                  .then(
+                    newImage => resolve(newImage),
+                    error => reject(error)
+                  );
               }, (err) => {
                 reject(err);
               });
@@ -130,7 +136,11 @@ export class ImageProvider {
                 this.camera.PictureSourceType.CAMERA
               ).then((success) => {
                 var image = this.pathForImage(success);
-                resolve(image);
+                this.crop.crop(image, {quality: 50})
+                  .then(
+                    newImage => resolve(newImage),
+                    error => reject(error)
+                  );
               }, (err) => {
                 reject(err);
               });
