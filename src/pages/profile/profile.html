@@ -9,25 +9,36 @@
 
 <ion-content padding>
 
-  <div text-center>
-    <img [src]="backgroundImg"  class="profile-image"/>
+  <div text-center (click)="takePicture()">
+    <img [src]="profileImage" class="profile-image"/>
   </div>
 
   <ion-row class="account-form">
     <ion-col>
-      <form [formGroup]="signUpForm">
+      <form [formGroup]="profileForm">
 
+        <div formGroupName="name">
           <ion-item>
-              <ion-label floating>First Name</ion-label>
-              <ion-input formControlName="firstName" type="text"
-              ></ion-input>
+            <ion-label floating>First Name</ion-label>
+            <ion-input formControlName="firstName" type="text"
+            [class.invalid]="!profileForm.controls.name.controls.firstName.valid && (profileForm.controls.name.controls.firstName.dirty || submitAttempt)"></ion-input>
+          </ion-item>
+
+          <ion-item *ngIf="!profileForm.controls.name.controls.firstName.valid && (profileForm.controls.name.controls.firstName.dirty || submitAttempt)">
+            <p>Please enter a valid name.</p>
           </ion-item>
 
           <ion-item>
-              <ion-label floating>Last Name</ion-label>
-              <ion-input formControlName="lastName" type="text"
-              ></ion-input>
+            <ion-label floating>Last Name</ion-label>
+            <ion-input formControlName="lastName" type="text"
+            [class.invalid]="!profileForm.controls.name.controls.lastName.valid && (profileForm.controls.name.controls.lastName.dirty || submitAttempt)"></ion-input>
           </ion-item>
+
+          <ion-item *ngIf="!profileForm.controls.name.controls.lastName.valid && (profileForm.controls.name.controls.lastName.dirty || submitAttempt)">
+            <p>Please enter a valid name.</p>
+          </ion-item>
+
+        </div>
 
       </form>
 

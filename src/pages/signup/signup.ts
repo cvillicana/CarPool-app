@@ -38,7 +38,7 @@ export class SignupPage{
     if(!isValid){
       return;
     }
-    
+
     this.submitAttempt = true;
 
     this.showLoader();
@@ -47,7 +47,7 @@ export class SignupPage{
       this.loading.dismiss();
       this.navCtrl.setRoot(TabsPage);
     }, (err) => {
-      this.loading.dismiss()
+      this.loading.dismiss();
     });
 
   }
