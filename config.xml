@@ -80,9 +80,11 @@
     <allow-navigation href="http://10.16.1.188:8100" />
     <allow-navigation href="http://192.168.1.65:8100" />
     <allow-navigation href="http://192.168.1.76:8100" />
+    <allow-navigation href="http://192.168.1.106:8100" />
     <engine name="android" spec="^6.2.3" />
     <plugin name="cordova-plugin-camera" spec="~2.4.1" />
     <plugin name="cordova-plugin-console" spec="^1.0.5" />
+    <plugin name="cordova-plugin-crop" spec="^0.4.0" />
     <plugin name="cordova-plugin-device" spec="^1.1.4" />
     <plugin name="cordova-plugin-facebook4" spec="^1.9.1">
         <variable name="APP_ID" value="1290362954408363" />
