@@ -41,6 +41,7 @@ export class UserProvider {
     return new Promise((resolve,reject) => {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
+      headers.append('Authorization', this.authService.token);
 
       this.http.put(this.apiURL + 'me', JSON.stringify(details), {headers: headers})
         .subscribe(res => {
