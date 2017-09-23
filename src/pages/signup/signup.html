@@ -7,29 +7,32 @@
 <ion-content padding>
   <ion-row class="account-form">
     <ion-col>
-      <form [formGroup]="signUpForm" (ngSubmit)="register(signUpForm)">
+      <form [formGroup]="signUpForm" (ngSubmit)="register(signUpForm.value, signUpForm.valid)">
 
-          <ion-item>
+          <div formGroupName="name">
+            <ion-item>
               <ion-label floating>First Name</ion-label>
               <ion-input formControlName="firstName" type="text"
-                [class.invalid]="!signUpForm.controls.firstName.valid && (signUpForm.controls.firstName.dirty || submitAttempt)"
+              [class.invalid]="!signUpForm.controls.name.controls.firstName.valid && (signUpForm.controls.name.controls.firstName.dirty || submitAttempt)"
               ></ion-input>
-          </ion-item>
+            </ion-item>
 
-          <ion-item *ngIf="!signUpForm.controls.firstName.valid  && (signUpForm.controls.firstName.dirty || submitAttempt)">
-               <p>Please enter a valid name.</p>
-           </ion-item>
+            <ion-item *ngIf="!signUpForm.controls.name.controls.firstName.valid && (signUpForm.controls.name.controls.firstName.dirty || submitAttempt)">
+              <p>Please enter a valid name.</p>
+            </ion-item>
 
-          <ion-item>
+            <ion-item>
               <ion-label floating>Last Name</ion-label>
               <ion-input formControlName="lastName" type="text"
-                [class.invalid]="!signUpForm.controls.lastName.valid && (signUpForm.controls.lastName.dirty || submitAttempt)"
+              [class.invalid]="!signUpForm.controls.name.controls.lastName.valid && (signUpForm.controls.name.controls.lastName.dirty || submitAttempt)"
               ></ion-input>
-          </ion-item>
+            </ion-item>
 
-          <ion-item *ngIf="!signUpForm.controls.lastName.valid  && (signUpForm.controls.lastName.dirty || submitAttempt)">
-               <p>Please enter a valid name.</p>
-           </ion-item>
+            <ion-item *ngIf="!signUpForm.controls.name.controls.lastName.valid && (signUpForm.controls.name.controls.lastName.dirty || submitAttempt)">
+              <p>Please enter a valid name.</p>
+            </ion-item>
+            
+          </div>
 
           <ion-item>
               <ion-label floating>Email</ion-label>
