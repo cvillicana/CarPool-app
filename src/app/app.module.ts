@@ -17,6 +17,7 @@ import { Facebook } from '@ionic-native/facebook';
 
 import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
+import { StartTripPage } from '../pages/start-trip/start-trip';
 
 import { AuthProvider } from '../providers/auth/auth';
 import { TodosProvider } from '../providers/todos/todos';
@@ -25,14 +26,11 @@ import { EmailValidator } from '../validators/email';
 import { ImageProvider } from '../providers/image/image';
 import { UserProvider } from '../providers/user/user';
 
-import { GoogleAutocompleteComponent } from '../components/google-autocomplete/google-autocomplete';
-
 
 @NgModule({
   declarations: [
     MyApp,
-    LoginPage,
-    GoogleAutocompleteComponent
+    LoginPage
   ],
   imports: [
     BrowserModule,

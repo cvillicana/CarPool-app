@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, ViewController } from 'ionic-angular';
 
@@ -7,13 +7,11 @@ import { IonicPage, NavController, ViewController } from 'ionic-angular';
   selector: 'page-start-trip',
   templateUrl: 'start-trip.html',
 })
-export class StartTripPage implements OnInit{
+
+export class StartTripPage{
 
   @ViewChild('startTripSlider') startTripSlider: any;
 
-  public mySlideOptions = {
-    pager:true
-  };
   public showSearchCity = true;
 
   public slideOneForm: FormGroup;
@@ -22,6 +20,8 @@ export class StartTripPage implements OnInit{
   public submitAttemp: boolean = false;
 
   public citySelected : any;
+  public autocompleteQuery: string;
+
 
   constructor(
     public navCtrl: NavController,
