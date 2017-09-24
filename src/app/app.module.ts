@@ -25,10 +25,14 @@ import { EmailValidator } from '../validators/email';
 import { ImageProvider } from '../providers/image/image';
 import { UserProvider } from '../providers/user/user';
 
+import { GoogleAutocompleteComponent } from '../components/google-autocomplete/google-autocomplete';
+
+
 @NgModule({
   declarations: [
     MyApp,
-    LoginPage
+    LoginPage,
+    GoogleAutocompleteComponent
   ],
   imports: [
     BrowserModule,
