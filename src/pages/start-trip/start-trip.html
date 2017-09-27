@@ -16,7 +16,16 @@
 
   <ion-content>
 
-      <google-autocomplete></google-autocomplete>
+      <google-autocomplete *ngIf="showSearchCityWhere" [options]="optionsWhere" [autocomplete]="autocompleteWhere" (itemSelected)="getSelection($event)"></google-autocomplete>
+      <google-autocomplete *ngIf="showSearchCityWhere" [options]="optionsFrom" [autocomplete]="autocompleteFrom" (itemSelected)="getSelection($event)"></google-autocomplete>
+
+      <ion-item>
+        <ion-label>Date</ion-label>
+        <ion-datetime displayFormat="DDDD" min="2017-09-27" max="2020-10-31" [(ngModel)]="dateWhere">
+        </ion-datetime>
+      </ion-item>
+
+      <span *ngIf="!showSearchCityWhere">{{cityWhere.description}}</span>
 
     <ion-slides #startTripSlider>
 
