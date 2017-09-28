@@ -4,4 +4,28 @@ page-start-trip {
     top:0;
     left:0;
   }
+  .input-box{
+    height: 70px;
+    border: 1px solid green;
+    width: 70px;
+    display: inline-block;
+  }
+  .input-passengers{
+    border: 1px solid red;
+    width: 120px;
+    height: 120px;
+  }
+  .button-custom {
+    width: 29px;
+    height: 29px;
+    float: right;
+    text-align: center;
+  }
+  .dec {
+    background-color: red;
+  }
+  .inc {
+    background-color: blue;
+  }
+
 }

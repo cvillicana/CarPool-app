@@ -2,6 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, ViewController } from 'ionic-angular';
 
+import moment from 'moment';
+
 @IonicPage()
 @Component({
   selector: 'page-start-trip',
@@ -26,7 +28,9 @@ export class StartTripPage{
   public cityWhere: any;
   public showSearchCityWhere = true;
   public dateWhere: any;
-  public today: any;
+  public timeSelected: any;
+  public today: string;
+  public limitDay: string;
 
 
   constructor(
@@ -34,9 +38,11 @@ export class StartTripPage{
     public FormBuilder: FormBuilder,
     public viewCtrl: ViewController) {
 
-      this.today = new Date().toISOString();
+      this.dateWhere = moment().format();
+      this.timeSelected = moment().format();
 
-      console.log(this.today)
+      this.today = moment().format();
+      this.limitDay = moment(this.today).add('5','days').format('YYYY-MM-DD');
 
       this.autocompleteWhere = {
         query : ""

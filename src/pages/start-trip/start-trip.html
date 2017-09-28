@@ -16,25 +16,34 @@
 
   <ion-content>
 
-      <google-autocomplete *ngIf="showSearchCityWhere" [options]="optionsWhere" [autocomplete]="autocompleteWhere" (itemSelected)="getSelection($event)"></google-autocomplete>
-      <google-autocomplete *ngIf="showSearchCityWhere" [options]="optionsFrom" [autocomplete]="autocompleteFrom" (itemSelected)="getSelection($event)"></google-autocomplete>
-
-      <ion-item>
-        <ion-label>Date</ion-label>
-        <ion-datetime displayFormat="DDDD" min="2017-09-27" max="2020-10-31" [(ngModel)]="dateWhere">
-        </ion-datetime>
-      </ion-item>
-
-      <span *ngIf="!showSearchCityWhere">{{cityWhere.description}}</span>
-
     <ion-slides #startTripSlider>
 
         <ion-slide>
+          <google-autocomplete *ngIf="showSearchCityWhere" [options]="optionsWhere" [autocomplete]="autocompleteWhere" (itemSelected)="getSelection($event)"></google-autocomplete>
+          <google-autocomplete *ngIf="showSearchCityWhere" [options]="optionsFrom" [autocomplete]="autocompleteFrom" (itemSelected)="getSelection($event)"></google-autocomplete>
+
+          <h3>Date</h3>
+          <ion-item>
+            <ion-datetime displayFormat="MMMM DDDD" [min]="today" [max]="limitDay" [(ngModel)]="dateWhere">
+            </ion-datetime>
+          </ion-item>
+
+          <h3>Time</h3>
+          <ion-item>
+            <ion-datetime displayFormat="HH:mm a" [min]="today" [(ngModel)]="timeSelected">
+            </ion-datetime>
+          </ion-item>
+
+          <span *ngIf="!showSearchCityWhere">{{cityWhere.description}}</span>
 
         </ion-slide>
 
         <ion-slide>
-
+          <h3>Passengers?</h3>
+          <div class="input-passengers">
+            <ion-input class="input-box" type="number"></ion-input>
+            <button ion-button class="inc button-custom">+</button><button ion-button class="dec button-custom">-</button>
+          </div>
         </ion-slide>
       <!-- <p *ngIf="!showSearchCity">{{citySelected.description}}</p> -->
 
