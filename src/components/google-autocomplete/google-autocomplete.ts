@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
 
 declare var google: any;
 
@@ -15,15 +16,16 @@ export class GoogleAutocompleteComponent implements OnInit {
 
   public autocompleteItems : any;
   public acService: any;
-  public selection: any;
+  public geoCodeService: any;
 
-  constructor() {
+  constructor(public googleMapsService: GoogleMapsProvider) {
     this.itemSelected = new EventEmitter<any>();
+    this.autocompleteItems = [];
   }
 
   ngOnInit(){
     this.acService = new google.maps.places.AutocompleteService();
-    this.autocompleteItems = [];
+    this.geoCodeService = new google.maps.Geocoder;
   }
 
   public clearSearch():void {
@@ -33,16 +35,16 @@ export class GoogleAutocompleteComponent implements OnInit {
 
   public select(item: any): void {
     this.clearSearch();
-    this.itemSelected.emit(item);
-    this.selection = item;
+    let self = this;
+    this.googleMapsService.geocode(item.place_id).then((place) => {
+      this.itemSelected.emit(place)
+    }, (err) => {
+      console.log(err);
+    })
   }
 
-  public getSelection(): any {
-   return this.selection;
- }
-
   public updateGoogleSearch(){
-    if (this.autocomplete.query == '') {
+    if (this.autocomplete.query == '' || this.autocomplete.query.length < 3) {
       this.autocompleteItems = [];
       return;
     }
@@ -51,13 +53,10 @@ export class GoogleAutocompleteComponent implements OnInit {
       types:  ['geocode'],
       input: this.autocomplete.query
     }
-    this.acService.getPlacePredictions(config, function (predictions, status) {
-      self.autocompleteItems = [];
-      if(predictions){
-        predictions.forEach(function (prediction) {
-          self.autocompleteItems.push(prediction);
-        });
-      }
+    this.googleMapsService.autocomplete(config).then((items) => {
+      this.autocompleteItems = items;
+    }, (err) =>{
+      console.log(err);
     });
   }
 

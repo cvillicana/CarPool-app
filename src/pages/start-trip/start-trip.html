@@ -8,7 +8,7 @@
         </button>
       </ion-buttons>
       <ion-buttons end>
-        <button ion-button icon-right (click)="next()">Next <ion-icon name="arrow-forwards"></ion-icon></button>
+        <button [disabled]="!canGoNext()" ion-button icon-right (click)="next()">{{nextButtonText}}<ion-icon name="arrow-forwards"></ion-icon></button>
       </ion-buttons>
     </ion-navbar>
   </ion-header>
@@ -19,12 +19,15 @@
     <ion-slides #startTripSlider>
 
         <ion-slide>
-          <google-autocomplete *ngIf="showSearchCityWhere" [options]="optionsWhere" [autocomplete]="autocompleteWhere" (itemSelected)="getSelection($event)"></google-autocomplete>
-          <google-autocomplete *ngIf="showSearchCityWhere" [options]="optionsFrom" [autocomplete]="autocompleteFrom" (itemSelected)="getSelection($event)"></google-autocomplete>
+          <google-autocomplete *ngIf="showSearchCityStart" [options]="optionsStart" [autocomplete]="autocompleteStart" (itemSelected)="getSelectionStart($event)"></google-autocomplete>
+          <google-autocomplete *ngIf="showSearchCityStart" [options]="optionsEnd" [autocomplete]="autocompleteStart" (itemSelected)="getSelectionEnd($event)"></google-autocomplete>
+
+          <!-- <span *ngIf="!showSearchCityStart">{{cityFrom.description}}</span>
+          <span *ngIf="!showSearchCityStart">{{cityWhere.description}}</span> -->
 
           <h3>Date</h3>
           <ion-item>
-            <ion-datetime displayFormat="MMMM DDDD" [min]="today" [max]="limitDay" [(ngModel)]="dateWhere">
+            <ion-datetime displayFormat="MMMM DDDD" [min]="today" [max]="limitDay" [(ngModel)]="dateTrip">
             </ion-datetime>
           </ion-item>
 
@@ -34,18 +37,56 @@
             </ion-datetime>
           </ion-item>
 
-          <span *ngIf="!showSearchCityWhere">{{cityWhere.description}}</span>
 
         </ion-slide>
 
         <ion-slide>
           <h3>Passengers?</h3>
           <div class="input-passengers">
-            <ion-input class="input-box" type="number"></ion-input>
-            <button ion-button class="inc button-custom">+</button><button ion-button class="dec button-custom">-</button>
+            <p class="input-box">{{passengersCount}}</p>
+            <div class="input-buttons">
+              <button ion-button (click)="addPassenger()" class="inc button-custom">+</button>
+              <button ion-button (click)="removePassenger()" class="dec button-custom">-</button>
+            </div>
+          </div>
+          <h3>Price?</h3>
+          <div class="input-passengers">
+            <ion-item>
+              <ion-input [(ngModel)]="priceTrip" type="number"></ion-input>
+            </ion-item>
           </div>
         </ion-slide>
-      <!-- <p *ngIf="!showSearchCity">{{citySelected.description}}</p> -->
+
+        <ion-slide>
+          <h3>Recap Trip</h3>
+
+          <ion-card>
+            <img src="assets/images/map-route.png" alt="map">
+
+            <ion-item>
+              <ion-icon name="football" item-start large></ion-icon>
+              <!-- <h2 *ngIf="!showSearchCityStart">{{cityFrom.description}}</h2> -->
+              <p>11 N. Way St, Madison, WI 53703</p>
+            </ion-item>
+
+            <ion-item>
+              <ion-icon name="football" item-start large></ion-icon>
+              <!-- <h2 *ngIf="!showSearchCityStart">{{cityWhere.description}}</h2> -->
+              <p>11 N. Way St, Madison, WI 53703</p>
+            </ion-item>
+
+            <ion-item>
+              <span item-left>18 min</span>
+              <span item-left>(2.6 mi)</span>
+              <button ion-button icon-left clear item-end>
+                <ion-icon name="navigate"></ion-icon>
+                Start
+              </button>
+            </ion-item>
+
+          </ion-card>
+
+        </ion-slide>
 
     </ion-slides>
 

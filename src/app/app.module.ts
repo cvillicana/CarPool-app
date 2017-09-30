@@ -25,6 +25,7 @@ import { TodosProvider } from '../providers/todos/todos';
 import { EmailValidator } from '../validators/email';
 import { ImageProvider } from '../providers/image/image';
 import { UserProvider } from '../providers/user/user';
+import { GoogleMapsProvider } from '../providers/google-maps/google-maps';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { UserProvider } from '../providers/user/user';
     FilePath,
     ImageProvider,
     UserProvider,
-    Crop
+    Crop,
+    GoogleMapsProvider
   ]
 })
 export class AppModule {}
