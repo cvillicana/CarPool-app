@@ -50,7 +50,7 @@ export class GoogleAutocompleteComponent implements OnInit {
     }
     let self = this;
     let config = {
-      types:  ['geocode'],
+      types:  ['(cities)'],
       input: this.autocomplete.query
     }
     this.googleMapsService.autocomplete(config).then((items) => {

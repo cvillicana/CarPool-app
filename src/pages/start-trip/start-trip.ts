@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, ViewController } from 'ionic-angular';
+
+import { OptionsTrip } from '../../models/optionsTrip';
 import { Trip } from '../../models/trip';
 
 import moment from 'moment';
@@ -29,31 +31,21 @@ export class StartTripPage{
 
   public endTrip: any;
   public startTrip: any;
-  public showSearchCityStart = true;
-  public showSearchCityEnd = true;
-  public dateTrip: any;
-  public timeSelected: any;
   public today: string;
   public limitDay: string;
-  public priceTrip: number;
 
   public newTrip: Trip;
-
-  public passengersCount: number;
+  public optionsTrip: OptionsTrip;
 
   constructor(
     public navCtrl: NavController,
     public FormBuilder: FormBuilder,
     public viewCtrl: ViewController) {
 
-      this.passengersCount = 1;
-      this.priceTrip = 10;
-
-      this.dateTrip = moment().format();
-      this.timeSelected = moment().format();
-
       this.today = moment().format();
       this.limitDay = moment(this.today).add('5','days').format('YYYY-MM-DD');
+
+      this.optionsTrip = new OptionsTrip();
 
       this.autocompleteEnd = {
         query : ""
@@ -72,10 +64,11 @@ export class StartTripPage{
   public next(): void{
     this.preButtonText = "Prev";
     if(!this.startTripSlider._isEnd){
-      this.nextButtonText = this.startTripSlider.getActiveIndex() === 1 ? "Finish" : "Next";
+      if(this.startTripSlider.getActiveIndex() === 1){
+        this.nextButtonText = "Finish";
+        this.newTrip = new Trip(this.startTrip, this.endTrip, this.optionsTrip);
+      }
       this.startTripSlider.slideNext();
-    }else{
-      this.newTrip = new Trip(this.startTrip, this.endTrip);
     }
   }
 
@@ -90,27 +83,25 @@ export class StartTripPage{
   }
 
   public addPassenger(): number {
-    if(this.passengersCount < 4)
-      return this.passengersCount++;
+    if(this.optionsTrip.passengers < 4)
+      return this.optionsTrip.passengers++;
   }
 
   public removePassenger(): number {
-    if(this.passengersCount > 1)
-      return this.passengersCount--;
+    if(this.optionsTrip.passengers > 1)
+      return this.optionsTrip.passengers--;
   }
 
   public getSelectionEnd(selection: any): void{
     this.endTrip = selection;
-    this.showSearchCityEnd = false;
   }
 
   public getSelectionStart(selection: any): void{
     this.startTrip = selection;
-    this.showSearchCityStart = false;
   }
 
   public canGoNext(): boolean {
-    if(this.showSearchCityStart || this.showSearchCityEnd)
+    if(!this.startTrip || !this.endTrip)
       return false;
     return true;
   }

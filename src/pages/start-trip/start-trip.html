@@ -19,21 +19,21 @@
     <ion-slides #startTripSlider>
 
         <ion-slide>
-          <google-autocomplete *ngIf="showSearchCityStart" [options]="optionsStart" [autocomplete]="autocompleteStart" (itemSelected)="getSelectionStart($event)"></google-autocomplete>
-          <google-autocomplete *ngIf="showSearchCityStart" [options]="optionsEnd" [autocomplete]="autocompleteStart" (itemSelected)="getSelectionEnd($event)"></google-autocomplete>
+          <google-autocomplete *ngIf="!startTrip" [options]="optionsStart" [autocomplete]="autocompleteStart" (itemSelected)="getSelectionStart($event)"></google-autocomplete>
+          <google-autocomplete *ngIf="!endTrip" [options]="optionsEnd" [autocomplete]="autocompleteEnd" (itemSelected)="getSelectionEnd($event)"></google-autocomplete>
 
-          <!-- <span *ngIf="!showSearchCityStart">{{cityFrom.description}}</span>
-          <span *ngIf="!showSearchCityStart">{{cityWhere.description}}</span> -->
+          <span *ngIf="startTrip">{{startTrip.formatted_address}}</span>
+          <span *ngIf="endTrip">{{endTrip.formatted_address}}</span>
 
           <h3>Date</h3>
           <ion-item>
-            <ion-datetime displayFormat="MMMM DDDD" [min]="today" [max]="limitDay" [(ngModel)]="dateTrip">
+            <ion-datetime displayFormat="MMMM DDDD" [min]="today" [max]="limitDay" [(ngModel)]="optionsTrip.date">
             </ion-datetime>
           </ion-item>
 
           <h3>Time</h3>
           <ion-item>
-            <ion-datetime displayFormat="HH:mm a" [min]="today" [(ngModel)]="timeSelected">
+            <ion-datetime displayFormat="HH:mm a" [(ngModel)]="optionsTrip.date">
             </ion-datetime>
           </ion-item>
 
@@ -43,7 +43,7 @@
         <ion-slide>
           <h3>Passengers?</h3>
           <div class="input-passengers">
-            <p class="input-box">{{passengersCount}}</p>
+            <p class="input-box">{{optionsTrip.passengers}}</p>
             <div class="input-buttons">
               <button ion-button (click)="addPassenger()" class="inc button-custom">+</button>
               <button ion-button (click)="removePassenger()" class="dec button-custom">-</button>
@@ -52,7 +52,7 @@
           <h3>Price?</h3>
           <div class="input-passengers">
             <ion-item>
-              <ion-input [(ngModel)]="priceTrip" type="number"></ion-input>
+              <ion-input [(ngModel)]="optionsTrip.price" type="number"></ion-input>
             </ion-item>
           </div>
         </ion-slide>
@@ -61,27 +61,49 @@
           <h3>Recap Trip</h3>
 
           <ion-card>
-            <img src="assets/images/map-route.png" alt="map">
 
-            <ion-item>
+            <ion-item *ngIf="newTrip">
               <ion-icon name="football" item-start large></ion-icon>
-              <!-- <h2 *ngIf="!showSearchCityStart">{{cityFrom.description}}</h2> -->
-              <p>11 N. Way St, Madison, WI 53703</p>
+              <h2>{{newTrip.start.formatted_address}}</h2>
             </ion-item>
 
-            <ion-item>
+            <ion-item *ngIf="newTrip">
               <ion-icon name="football" item-start large></ion-icon>
-              <!-- <h2 *ngIf="!showSearchCityStart">{{cityWhere.description}}</h2> -->
-              <p>11 N. Way St, Madison, WI 53703</p>
+              <h2>{{newTrip.end.formatted_address}}</h2>
             </ion-item>
 
-            <ion-item>
-              <span item-left>18 min</span>
-              <span item-left>(2.6 mi)</span>
-              <button ion-button icon-left clear item-end>
-                <ion-icon name="navigate"></ion-icon>
-                Start
-              </button>
+            <ion-item *ngIf="newTrip">
+              <ion-icon name="time" item-start large></ion-icon>
+              <h2>{{newTrip.options.date}}</h2>
+            </ion-item>
+
+            <ion-item *ngIf="newTrip">
+              <ion-row>
+
+                <ion-col>
+                  <span icon-left clear item-start>
+                    <ion-icon name="car">
+                    </ion-icon>
+                    {{newTrip.distance}} km
+                  </span>
+                </ion-col>
+
+                <ion-col center text-center>
+                  <span icon-left clear>
+                    <ion-icon name="contacts"></ion-icon>
+                    {{newTrip.options.passengers}}
+                  </span>
+                </ion-col>
+
+                <ion-col text-right>
+                  <span icon-left clear>
+                    <ion-icon name="usd"></ion-icon>
+                    {{newTrip.options.price}}
+                  </span>
+                </ion-col>
+              </ion-row>
+
+
             </ion-item>
 
           </ion-card>
