@@ -55,7 +55,7 @@
         "typescript": "2.3.4"
     },
     "config": {
-        "ionic_webpack": "./webpack.config.js"
+        "ionic_webpack": "./config/webpack.config.js"
     },
     "description": "An Ionic project",
     "cordova": {

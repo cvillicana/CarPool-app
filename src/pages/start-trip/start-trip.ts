@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IonicPage, NavController, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, ViewController, LoadingController } from 'ionic-angular';
+import { TripProvider } from '../../providers/trip/trip';
 
 import { OptionsTrip } from '../../models/optionsTrip';
 import { Trip } from '../../models/trip';
@@ -17,9 +18,8 @@ export class StartTripPage{
 
   @ViewChild('startTripSlider') startTripSlider: any;
 
+  public loading: any;
 
-  public slideOneForm: FormGroup;
-  public slideTwoForm: FormGroup;
   public preButtonText: string = "Back";
   public nextButtonText: string = "Next";
   public submitAttemp: boolean = false;
@@ -40,7 +40,9 @@ export class StartTripPage{
   constructor(
     public navCtrl: NavController,
     public FormBuilder: FormBuilder,
-    public viewCtrl: ViewController) {
+    public viewCtrl: ViewController,
+    public tripService: TripProvider,
+    public loadingCtrl: LoadingController) {
 
       this.today = moment().format();
       this.limitDay = moment(this.today).add('5','days').format('YYYY-MM-DD');
@@ -69,6 +71,8 @@ export class StartTripPage{
         this.newTrip = new Trip(this.startTrip, this.endTrip, this.optionsTrip);
       }
       this.startTripSlider.slideNext();
+    }else{
+      this.finish(this.newTrip);
     }
   }
 
@@ -106,8 +110,23 @@ export class StartTripPage{
     return true;
   }
 
-  public save(){
+  public finish(trip){
+    if(!trip){
+      return;
+    }
+    this.showLoader('Creating...');
+    this.tripService.createTrip(trip).then((result) =>{
+      this.loading.dismiss();
+    }, (err) => {
+      this.loading.dismiss();
+    });
+  }
 
+  public showLoader(content){
+    this.loading = this.loadingCtrl.create({
+      content: content
+    });
+    this.loading.present();
   }
 
 }

@@ -70,10 +70,12 @@ export class ProfilePage {
       return;
     }
     this.submitAttempt = true;
+    this.showLoader('Updating...');
     this.userService.updateUser(model).then((result) => {
       console.log(result);
+      this.loading.dismiss();
     }, (err) => {
-    //  this.loading.dismiss();
+     this.loading.dismiss();
     })
 
   }
