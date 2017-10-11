@@ -14,11 +14,11 @@ export class Trip{
   ){
       this.start = start;
       this.start.city = start.formatted_address;
-      this.start.location = { coordinates: [start.geometry.location.lng(), start.geometry.location.lat()]}
+      this.start.location = { coordinates: [start.geometry.location.lng(), start.geometry.location.lat()]};
 
       this.end = end;
       this.end.city = end.formatted_address;
-      this.end.location = { coordinates: [end.geometry.location.lng(), end.geometry.location.lat()]}
+      this.end.location = { coordinates: [end.geometry.location.lng(), end.geometry.location.lat()]};
 
       this.distance = this.getDistance();
       this.options = options;

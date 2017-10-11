@@ -27,8 +27,8 @@ export class ProfilePage {
     public app: App,
     public navCtrl: NavController,
     public authService: AuthProvider,
+    public formBuilder: FormBuilder,
     public imageService: ImageProvider,
-    private formBuilder: FormBuilder,
     public userService: UserProvider,
     public loadingCtrl: LoadingController) {
         this.profileImage = "assets/images/profilepicture.png";

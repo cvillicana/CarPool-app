@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController} from 'ionic-angular';
 
-/**
- * Generated class for the SearchTripPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import { SearchTrip } from '../../models/searchTrip';
+
+
 @IonicPage()
 @Component({
   selector: 'page-search-trip',
@@ -14,15 +11,21 @@ import { IonicPage, NavController} from 'ionic-angular';
 })
 export class SearchTripPage {
 
+  public autocompleteStart: any;
+  public startSearchDirection: any;
+  public optionsStart: any;
+
   constructor(public navCtrl: NavController) {
+    this.autocompleteStart = {
+      query : ""
+    }
+    this.optionsStart = {
+      placeholder : "Start Trip"
+    }
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SearchTripPage');
-  }
-
-  goBack() {
-    this.navCtrl.pop();
+  public getSelectionStart(selection: any): void{
+    this.startSearchDirection = new SearchTrip(selection);
   }
 
 }

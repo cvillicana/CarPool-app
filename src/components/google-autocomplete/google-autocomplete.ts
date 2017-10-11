@@ -35,7 +35,6 @@ export class GoogleAutocompleteComponent implements OnInit {
 
   public select(item: any): void {
     this.clearSearch();
-    let self = this;
     this.googleMapsService.geocode(item.place_id).then((place) => {
       this.itemSelected.emit(place)
     }, (err) => {
@@ -48,7 +47,6 @@ export class GoogleAutocompleteComponent implements OnInit {
       this.autocompleteItems = [];
       return;
     }
-    let self = this;
     let config = {
       types:  ['(cities)'],
       input: this.autocomplete.query

@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the CurrentPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import { IonicPage, NavController } from 'ionic-angular';
+import { TripProvider } from '../../providers/trip/trip';
 
 @IonicPage()
 @Component({
@@ -15,11 +9,23 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class CurrentPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  public trips:any = [];
+
+  constructor(
+    public navCtrl: NavController,
+    public tripService: TripProvider) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CurrentPage');
+  ionViewWillEnter() {
+    this.getCurrenTrips();
+  }
+
+  public getCurrenTrips(){
+    this.tripService.currentTrips().then((result) => {
+      this.trips = result.trips;
+    }, (err) => {
+      console.log(err);
+    })
   }
 
 }

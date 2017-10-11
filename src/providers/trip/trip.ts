@@ -33,4 +33,19 @@ export class TripProvider {
     });
   }
 
+  public currentTrips(): any{
+    return new Promise((resolve, reject) => {
+      let headers = new Headers();
+      headers.append('Authorization', this.authService.token);
+
+      this.http.get(this.apiURL + "me/active", {headers: headers})
+        .subscribe(res => {
+          let user = res.json();
+          resolve(user);
+        }, (err) => {
+          reject(err);
+        });
+    })
+  }
+
 }

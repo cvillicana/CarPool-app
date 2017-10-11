@@ -1,5 +1,4 @@
 import { Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, ViewController, LoadingController } from 'ionic-angular';
 import { TripProvider } from '../../providers/trip/trip';
 
@@ -19,6 +18,8 @@ export class StartTripPage{
   @ViewChild('startTripSlider') startTripSlider: any;
 
   public loading: any;
+  public isLoading: boolean;
+  public hasTrips: boolean = false;
 
   public preButtonText: string = "Back";
   public nextButtonText: string = "Next";
@@ -37,14 +38,17 @@ export class StartTripPage{
   public newTrip: Trip;
   public optionsTrip: OptionsTrip;
 
+  public trips: any;
+
   constructor(
     public navCtrl: NavController,
-    public FormBuilder: FormBuilder,
     public viewCtrl: ViewController,
     public tripService: TripProvider,
     public loadingCtrl: LoadingController) {
 
+
       this.today = moment().format();
+
       this.limitDay = moment(this.today).add('5','days').format('YYYY-MM-DD');
 
       this.optionsTrip = new OptionsTrip();
@@ -62,6 +66,21 @@ export class StartTripPage{
         placeholder : "Where are you from?"
       }
     }
+
+  ionViewDidLoad(){
+    this.startTripSlider.lockSwipes(true);
+    this.isLoading = true;
+    this.getCurrenTrips().then((result) => {
+      let trips = result as any[];
+      if (trips.length > 0){
+        this.hasTrips = true;
+      }
+      this.isLoading = false;
+    }, (err) =>{
+      console.log(err);
+    });
+    //this.showLoader('Creating...');
+  }
 
   public next(): void{
     this.preButtonText = "Prev";
@@ -105,8 +124,12 @@ export class StartTripPage{
   }
 
   public canGoNext(): boolean {
-    if(!this.startTrip || !this.endTrip)
+    if(!this.startTrip || !this.endTrip){
+      this.startTripSlider.lockSwipes(true);
       return false;
+    }
+
+    this.startTripSlider.lockSwipes(false);
     return true;
   }
 
@@ -117,9 +140,26 @@ export class StartTripPage{
     this.showLoader('Creating...');
     this.tripService.createTrip(trip).then((result) =>{
       this.loading.dismiss();
+      this.goToCurrent();
     }, (err) => {
       this.loading.dismiss();
     });
+  }
+
+  public getCurrenTrips(){
+    return new Promise((resolve, reject) => {
+      this.tripService.currentTrips().then((result) => {
+        resolve(result.trips);
+      }, (err) => {
+        reject(err);
+      });
+    });
+
+
+  }
+
+  public goToCurrent(){
+    this.navCtrl.setPages([{page:'DashboardPage'}, {page:'CurrentPage'}]);
   }
 
   public showLoader(content){
@@ -127,6 +167,12 @@ export class StartTripPage{
       content: content
     });
     this.loading.present();
+  }
+
+  public showStartTrip(): boolean{
+    if(this.isLoading){
+      return false;
+    }
   }
 
 }
