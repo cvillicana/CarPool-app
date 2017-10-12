@@ -13,6 +13,9 @@ export class DashboardPage {
     public navCtrl: NavController,
     public authService: AuthProvider) {}
 
+  ionViewWillEnter(){
+  }
+
   goSearchTrip() {
     this.navCtrl.push('SearchTripPage');
   }

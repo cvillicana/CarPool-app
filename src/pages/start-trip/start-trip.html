@@ -1,18 +1,129 @@
-<!--
-  Generated template for the StartTripPage page.
+  <ion-header>
+    <ion-navbar hideBackButton color="primary">
+      <ion-title>Start a Trip</ion-title>
+      <ion-buttons *ngIf="!isLoading && !hasTrips" start>
+        <button ion-button icon-left (click)="prev()">
+          <ion-icon name="arrow-back"></ion-icon>
+          {{preButtonText}}
+        </button>
+      </ion-buttons>
+      <ion-buttons *ngIf="!isLoading && !hasTrips" end>
+        <button [disabled]="!canGoNext()" ion-button icon-right (click)="next()">{{nextButtonText}}<ion-icon name="arrow-forwards"></ion-icon></button>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-header>
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
 
-  <ion-navbar>
-    <ion-title>StartTrip</ion-title>
-  </ion-navbar>
+  <ion-content>
 
-</ion-header>
+    <div *ngIf="!isLoading && hasTrips">
+
+      <h1 *ngIf="!isLoading && hasTrips">You have a current trip</h1>
+
+      <button ion-button primary (click)="goToCurrent()">Go to your trip</button>
+
+    </div>
 
 
-<ion-content padding>
+    <ion-slides #startTripSlider>
 
-</ion-content>
+      <div *ngIf="!isLoading && !hasTrips">
+
+        <ion-slide>
+          <google-autocomplete *ngIf="!startTrip" [options]="optionsStart" [autocomplete]="autocompleteStart" (itemSelected)="getSelectionStart($event)"></google-autocomplete>
+          <google-autocomplete *ngIf="!endTrip" [options]="optionsEnd" [autocomplete]="autocompleteEnd" (itemSelected)="getSelectionEnd($event)"></google-autocomplete>
+
+          <span *ngIf="startTrip">{{startTrip.formatted_address}}</span>
+          <span *ngIf="endTrip">{{endTrip.formatted_address}}</span>
+
+          <h3>Date</h3>
+          <ion-item>
+            <ion-datetime displayFormat="MMMM DDDD" [min]="today" [max]="limitDay" [(ngModel)]="optionsTrip.date">
+            </ion-datetime>
+          </ion-item>
+
+          <h3>Time</h3>
+          <ion-item>
+            <ion-datetime displayFormat="HH:mm a" [(ngModel)]="optionsTrip.date">
+            </ion-datetime>
+          </ion-item>
+
+
+        </ion-slide>
+
+        <ion-slide>
+          <h3>Passengers?</h3>
+          <div class="input-passengers">
+            <p class="input-box">{{optionsTrip.passengers}}</p>
+            <div class="input-buttons">
+              <button ion-button (click)="addPassenger()" class="inc button-custom">+</button>
+              <button ion-button (click)="removePassenger()" class="dec button-custom">-</button>
+            </div>
+          </div>
+          <h3>Price?</h3>
+          <div class="input-passengers">
+            <ion-item>
+              <ion-input [(ngModel)]="optionsTrip.price" type="number"></ion-input>
+            </ion-item>
+          </div>
+        </ion-slide>
+
+        <ion-slide>
+          <h3>Recap Trip</h3>
+
+          <ion-card>
+
+            <ion-item *ngIf="newTrip">
+              <ion-icon name="football" item-start large></ion-icon>
+              <h2>{{newTrip.start.formatted_address}}</h2>
+            </ion-item>
+
+            <ion-item *ngIf="newTrip">
+              <ion-icon name="football" item-start large></ion-icon>
+              <h2>{{newTrip.end.formatted_address}}</h2>
+            </ion-item>
+
+            <ion-item *ngIf="newTrip">
+              <ion-icon name="time" item-start large></ion-icon>
+              <h2>{{newTrip.options.date}}</h2>
+            </ion-item>
+
+            <ion-item *ngIf="newTrip">
+              <ion-row>
+
+                <ion-col>
+                  <span icon-left clear item-start>
+                    <ion-icon name="car">
+                    </ion-icon>
+                    {{newTrip.distance}} km
+                  </span>
+                </ion-col>
+
+                <ion-col center text-center>
+                  <span icon-left clear>
+                    <ion-icon name="contacts"></ion-icon>
+                    {{newTrip.options.passengers}}
+                  </span>
+                </ion-col>
+
+                <ion-col text-right>
+                  <span icon-left clear>
+                    <ion-icon name="cash"></ion-icon>
+                    {{newTrip.options.price}}
+                  </span>
+                </ion-col>
+              </ion-row>
+
+
+            </ion-item>
+
+          </ion-card>
+
+        </ion-slide>
+
+      </div>
+
+
+    </ion-slides>
+
+  </ion-content>

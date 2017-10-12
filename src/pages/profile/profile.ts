@@ -27,8 +27,8 @@ export class ProfilePage {
     public app: App,
     public navCtrl: NavController,
     public authService: AuthProvider,
+    public formBuilder: FormBuilder,
     public imageService: ImageProvider,
-    private formBuilder: FormBuilder,
     public userService: UserProvider,
     public loadingCtrl: LoadingController) {
         this.profileImage = "assets/images/profilepicture.png";
@@ -70,10 +70,12 @@ export class ProfilePage {
       return;
     }
     this.submitAttempt = true;
+    this.showLoader('Updating...');
     this.userService.updateUser(model).then((result) => {
       console.log(result);
+      this.loading.dismiss();
     }, (err) => {
-    //  this.loading.dismiss();
+     this.loading.dismiss();
     })
 
   }

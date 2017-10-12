@@ -14,8 +14,15 @@
 
 
 <ion-content padding>
-  <button (click)="goBack()" ion-button outline icon-start>
-    <ion-icon name='car' is-active="false"></ion-icon>
-    Go back
-  </button>
+
+  <google-autocomplete
+    *ngIf="!startSearchDirection"
+    [options]="optionsStart"
+    [autocomplete]="autocompleteStart"
+    (itemSelected)="getSelectionStart($event)">
+  </google-autocomplete>
+
+  <button *ngIf="startSearchDirection" ion-button primary> Start Searching</button>
+
+
 </ion-content>

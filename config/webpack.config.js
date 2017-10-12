@@ -44,6 +44,8 @@ module.exports = {
   plugins: [
     ionicWebpackFactory.getIonicEnvironmentPlugin(),
     ionicWebpackFactory.getCommonChunksPlugin(),
+    new webpack.EnvironmentPlugin(['IONIC_ENV']),
+    new webpack.EnvironmentPlugin(['NODE_ENV'])
   ].concat(prodPlugins),
 
   // Some libraries import Node modules but don't use them in the browser.

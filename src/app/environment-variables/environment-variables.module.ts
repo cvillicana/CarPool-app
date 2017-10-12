@@ -6,7 +6,7 @@ import { localVariables } from './local';
 declare const process: any; // Typescript compiler will complain without this
 
 export function environmentFactory() {
-  return process.env.IONIC_ENV === 'local' ? localVariables : devVariables;
+  return process.env.NODE_ENV === 'local' ? localVariables : devVariables;
 }
 
 @NgModule({

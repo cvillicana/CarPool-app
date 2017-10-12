@@ -1,3 +1,36 @@
 page-start-trip {
+  .slide-zoom{
+    position: absolute;
+    top:0;
+    left:0;
+  }
+  .input-box{
+    margin: 0px;
+    height: 50px;
+    width: 50px;
+    display: inline-block;
+    float: left;
+    font-size: 40px;
+  }
+  .input-passengers{
+    margin: 0 auto;
+    width: 95px;
+    height: 73px;
+  }
+  .button-custom {
+    width: 20px;
+    height: 20px;
+    float: right;
+    text-align: center;
+  }
+  .inc{
+    margin-top: 1px;
+  }
+  .input-buttons{
+    display: block;
+    float: right;
+    width: 6px;
+    height: 100px;
+  }
 
 }
