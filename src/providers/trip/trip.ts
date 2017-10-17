@@ -48,4 +48,20 @@ export class TripProvider {
     })
   }
 
+  public nearTrips(data): any{
+    return new Promise((resolve, reject) =>{
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      headers.append('Authorization', this.authService.token);
+
+      this.http.put(this.apiURL + "near", JSON.stringify(data), {headers:headers})
+        .subscribe(res => {
+          let data = res.json();
+          resolve(data.trips);
+        }, (err) => {
+          reject(err);
+        })
+    })
+  }
+
 }

@@ -1,13 +1,13 @@
   <ion-header>
     <ion-navbar hideBackButton color="primary">
       <ion-title>Start a Trip</ion-title>
-      <ion-buttons *ngIf="!isLoading && !hasTrips" start>
+      <ion-buttons start>
         <button ion-button icon-left (click)="prev()">
           <ion-icon name="arrow-back"></ion-icon>
           {{preButtonText}}
         </button>
       </ion-buttons>
-      <ion-buttons *ngIf="!isLoading && !hasTrips" end>
+      <ion-buttons end>
         <button [disabled]="!canGoNext()" ion-button icon-right (click)="next()">{{nextButtonText}}<ion-icon name="arrow-forwards"></ion-icon></button>
       </ion-buttons>
     </ion-navbar>
@@ -16,18 +16,7 @@
 
   <ion-content>
 
-    <div *ngIf="!isLoading && hasTrips">
-
-      <h1 *ngIf="!isLoading && hasTrips">You have a current trip</h1>
-
-      <button ion-button primary (click)="goToCurrent()">Go to your trip</button>
-
-    </div>
-
-
     <ion-slides #startTripSlider>
-
-      <div *ngIf="!isLoading && !hasTrips">
 
         <ion-slide>
           <google-autocomplete *ngIf="!startTrip" [options]="optionsStart" [autocomplete]="autocompleteStart" (itemSelected)="getSelectionStart($event)"></google-autocomplete>
@@ -120,8 +109,6 @@
           </ion-card>
 
         </ion-slide>
-
-      </div>
 
 
     </ion-slides>
